@@ -1,41 +1,22 @@
 apply plugin: 'kotlin'
-apply plugin: 'maven'
+apply from: 'publish.gradle'
+
+if (file('user.gradle').exists())
+  apply from: 'user.gradle' // optional user-specific local tweaks
 
 buildscript {
-  repositories {
-    mavenCentral()
+  ext {
+    kotlin_version = "1.0.1-1"
+    android_gradle_plugin_version = "1.5.0"
   }
-  dependencies {
-    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.0.1-1"
-  }
+  repositories { mavenCentral() }
+  dependencies { classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version" }
 }
-
 
 dependencies {
-  repositories {
-    mavenCentral()
-  }
+  repositories { mavenCentral() }
 
   compile gradleApi()
-  compile 'com.android.tools.build:gradle:1.5.0'
-  compile "org.jetbrains.kotlin:kotlin-stdlib:1.0.1-1"
+  compile "com.android.tools.build:gradle:$android_gradle_plugin_version"
+  compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 }
-
-group = 'ae.vigilancer.android.run'
-version = '1.0.0'
-
-uploadArchives {
-  repositories {
-    mavenDeployer {
-      pom.artifactId = 'gradle-plugin'
-      repository(url: uri("./repo"))
-    }
-  }
-}
-
-install {
-  repositories.mavenInstaller {
-    pom.artifactId = 'gradle-plugin'
-  }
-}
-
