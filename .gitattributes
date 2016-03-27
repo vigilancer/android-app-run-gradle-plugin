@@ -1,0 +1,7 @@
+
+# default behavior, in case people don't have core.autocrlt set
+* text=auto
+
+# always have win-style ending
+gradlew.bat text eol=crlf
+
