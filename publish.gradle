@@ -1,0 +1,30 @@
+
+publishing {
+  publications {
+    MyPublication(MavenPublication) {
+      from components.java
+      groupId "ae.vigilancer.gradle.plugin"
+      artifactId "android-run"
+      version "1.0.0"
+    }
+  }
+}
+
+bintray {
+  user = System.getenv('BINTRAY_USER')
+  key = System.getenv('BINTRAY_API_KEY')
+
+  dryRun = false
+  publish = false
+
+  publications = ['MyPublication']
+
+  pkg {
+    repo = 'maven'
+    name = 'android-run-gradle-plugin'
+    licenses = ['BSD 2-Clause']
+    labels = ['android', 'gradle-plugin']
+    publicDownloadNumbers = true
+    vcsUrl = 'https://github.com/vigilancer/android-app-run-gradle-plugin.git'
+  }
+}

@@ -19,7 +19,7 @@ class AppRunnerPlugin : Plugin<Project> {
             val parentTask = v.install
             val adb = ext.adbExe
 
-            // skipping unsigned not-debug builds since they don't have 'Install*' tasks
+            // skipping unsigned non-debug builds since they don't have 'Install*' tasks
             if (v.isSigningReady) {
                 val packageId = v.applicationId
 
