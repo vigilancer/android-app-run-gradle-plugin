@@ -1,0 +1,26 @@
+#### how to apply
+
+[source,groovy]
+----
+apply plugin: 'ae.vigilancer.android.run'`
+// or //apply plugin: 'ae.android.run'
+
+repositories {
+   jcenter()
+}
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath "ae.vigilancer.gradle.plugin:android-run:1.0.0"
+    }
+}
+----
+
+#### how to use
+
+Run `./gradlew tasks` and find `Running tasks` group
+
+
