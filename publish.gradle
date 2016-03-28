@@ -1,26 +1,30 @@
-apply plugin: 'maven'
 
-def credentials = "https://raw.githubusercontent.com/vigilancer/scripts/6c9986c27095b15f440d74554aed61a1ee532e7e/delete-unaligned-files-android.gradle"
-try { apply from: "$credentials" } catch (ignored) {}
-
-
-group = 'ae.vigilancer.android.run'
-version = '1.0.0'
-
-//noinspection GroovyAssignabilityCheck
-uploadArchives {
-  repositories {
-    mavenDeployer {
-      pom.artifactId = 'gradle-plugin'
-      repository(url: uri("./repo"))
+publishing {
+  publications {
+    MyPublication(MavenPublication) {
+      from components.java
+      groupId "ae.vigilancer.gradle.plugin"
+      artifactId "android-run"
+      version "1.0.0"
     }
   }
 }
 
-install {
-  repositories.mavenInstaller {
-    pom.artifactId = 'gradle-plugin'
+bintray {
+  user = System.getenv('BINTRAY_USER')
+  key = System.getenv('BINTRAY_API_KEY')
+
+  dryRun = false
+  publish = false
+
+  publications = ['MyPublication']
+
+  pkg {
+    repo = 'maven'
+    name = 'android-run-gradle-plugin'
+    licenses = ['BSD 2-Clause']
+    labels = ['android', 'gradle-plugin']
+    publicDownloadNumbers = true
+    vcsUrl = 'https://github.com/vigilancer/android-app-run-gradle-plugin.git'
   }
 }
-
-
