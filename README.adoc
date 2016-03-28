@@ -1,15 +1,30 @@
-#### wtf?
 
 Do you really want to just install apk on device? +
 Or you are actually developer and want to start it and see results like.. right now? +
- Fear no more. Present magic piece of code, that can save you about 37 sec per month.
+Fear no more. Present magic piece of code, that can save you about 37 sec per month.
+
+
+#### wtf?
+Gradle plugin that add tasks to android projects for installing and launching installed app. +
+Creates as many tasks as build variants your project have. +
+
+Instead of copy-pasting from project to project task +
+[source,groovy]
+----
+task runDebug1(type: Exec, dependsOn: 'installDebug') {
+    def adb = android.getAdbExe().toString()
+    commandLine "$adb", 'shell', 'am', 'start', '-n', 'som.awesome.app/.ui.MainActivity'
+}
+----
+
+now it's enough to just apply this plugin.
 
 
 #### how to apply
 
 [source,groovy]
 ----
-apply plugin: 'ae.vigilancer.android.run'`
+apply plugin: 'ae.vigilancer.android.run'
 // or //apply plugin: 'ae.android.run'
 
 repositories {
