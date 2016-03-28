@@ -1,7 +1,7 @@
 #### wtf?
 
-Do you really want to just install apk on device?
-Or you are actually developer and want to start it and see results like.. right now?
+Do you really want to just install apk on device? +
+Or you are actually developer and want to start it and see results like.. right now? +
  Fear no more. Present magic piece of code, that can save you about 37 sec per month.
 
 
@@ -28,7 +28,7 @@ buildscript {
 
 #### how to use
 
-Run `./gradlew tasks` and find `Running tasks` group.
+Run `./gradlew tasks` and find `Running tasks` group.+
 You'll see something like this:
 
 [source]
@@ -41,5 +41,5 @@ runArmPaidappDebug - Install and run DebugArmPaidapp build.
 runArmPaidappSomethingBlue - Install and run SomethingBlueArmPaidapp build.
 ----
 
-[In example above there is no tasks for Release build type since test project have no signingConfig for Release.]
+*In example above there are no tasks for Release variants since test project have no signingConfig for Release.
 
