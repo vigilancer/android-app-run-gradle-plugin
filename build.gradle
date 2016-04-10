@@ -9,15 +9,19 @@ if (file('user.gradle').exists())
 
 buildscript {
   ext {
-    kotlin_version = "1.0.1-1"
-    android_gradle_plugin_version = "1.5.0"
+    this_groupId = 'ae.vigilancer.gradle.plugin'
+    this_artifactId = 'android-run'
+    this_version = '1.0.1'
+    this_url = 'https://github.com/vigilancer/android-app-run-gradle-plugin'
+    this_vcsUrl = 'https://github.com/vigilancer/android-app-run-gradle-plugin.git'
+    this_description = 'Build, install and run any BuildVariant of Android application with one command'
   }
   repositories {
     mavenCentral()
     jcenter()
   }
   dependencies {
-    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.0.1-1"
     classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.6'
   }
 }
@@ -26,6 +30,6 @@ dependencies {
   repositories { mavenCentral() }
 
   compile gradleApi()
-  compile "com.android.tools.build:gradle:$android_gradle_plugin_version"
-  compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+  compile "com.android.tools.build:gradle:1.5.0"
+  compile "org.jetbrains.kotlin:kotlin-stdlib:1.0.1-1"
 }

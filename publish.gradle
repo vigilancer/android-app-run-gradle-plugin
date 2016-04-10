@@ -1,24 +1,21 @@
 
-group "ae.vigilancer.gradle.plugin"
-version "1.0.0"
+group "$this_groupId"
+version "$this_version"
 
 publishing {
   publications {
     MyPublication(MavenPublication) {
       from components.java
-      //noinspection GroovyAssignabilityCheck
       artifact sourcesJar
-      groupId "ae.vigilancer.gradle.plugin"
-      artifactId "android-run"
-      //noinspection GroovyAssignabilityCheck
-      version "1.0.0"
+      groupId "$this_groupId"
+      artifactId "$this_artifactId"
+      version "$this_version"
     }
   }
 }
 
 task sourcesJar(type: Jar, dependsOn: classes) {
   classifier = 'src'
-  //noinspection GrUnresolvedAccess,GroovyAssignabilityCheck
   from sourceSets.main.allSource
 }
 
@@ -27,21 +24,19 @@ bintray {
   key = System.getenv('BINTRAY_API_KEY')
 
   dryRun = false
-  //noinspection GroovyAssignabilityCheck
   publish = false
 
   publications = ['MyPublication']
   pkg {
     repo = 'maven'
-    name = 'gradle-plugin.android-run'
+    name = "gradle-plugin.$this_artifactId"
     licenses = ['BSD 2-Clause']
     labels = ['android', 'gradle-plugin']
     publicDownloadNumbers = true
-    vcsUrl = 'https://github.com/vigilancer/android-app-run-gradle-plugin.git'
+    vcsUrl = "$this_vcsUrl"
 
-    //noinspection GroovyAssignabilityCheck
     version {
-      name = '1.0.0'
+      name = "$this_version"
     }
   }
 }
