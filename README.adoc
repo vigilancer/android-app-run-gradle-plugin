@@ -24,8 +24,7 @@ now it's enough to just apply this plugin.
 
 [source,groovy]
 ----
-apply plugin: 'ae.vigilancer.android.run'
-// or //apply plugin: 'ae.android.run'
+apply plugin: 'android-run-app'
 
 repositories {
    jcenter()
@@ -36,7 +35,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath "ae.vigilancer.gradle.plugin:android-run:1.0.0"
+        classpath "ae.vigilancer.gradle.plugin:android-run:1.0.1"
     }
 }
 ----
