@@ -11,7 +11,7 @@ Creates as many tasks as build variants your project have. +
 Instead of copy-pasting from project to project task +
 [source,groovy]
 ----
-task runDebug1(type: Exec, dependsOn: 'installDebug') {
+task runDebug(type: Exec, dependsOn: 'installDebug') {
     def adb = android.getAdbExe().toString()
     commandLine "$adb", 'shell', 'am', 'start', '-n', 'som.awesome.app/.ui.MainActivity'
 }
@@ -25,10 +25,6 @@ now it's enough to just apply this plugin.
 [source,groovy]
 ----
 apply plugin: 'android-run-app'
-
-repositories {
-   jcenter()
-}
 
 buildscript {
     repositories {
