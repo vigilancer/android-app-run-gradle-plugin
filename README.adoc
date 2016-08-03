@@ -31,8 +31,13 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath "ae.vigilancer.gradle.plugin:android-run:1.0.1"
+        classpath "ae.vigilancer.gradle.plugin:android-run:1.0.2"
     }
+}
+
+appRunner {
+    // set `true`, if targeting android-tv (action MAIN == LEANBACK_LAUNCHER)
+    tv false // default
 }
 ----
 
