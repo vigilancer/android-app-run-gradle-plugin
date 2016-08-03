@@ -13,6 +13,7 @@ class AppRunnerPlugin : Plugin<Project> {
         if (!project.plugins.hasPlugin(AppPlugin::class.java)) {
             throw StopExecutionException("should be applied after 'com.android.application' plugin")
         }
+        project.extensions.create("appRunner", AppRunnerExtension::class.java)
         val ext: AppExtension = project.extensions.getByType(AppExtension::class.java)
 
         ext.applicationVariants.all { v ->
@@ -32,8 +33,13 @@ class AppRunnerPlugin : Plugin<Project> {
                         "group" to "Running"
                     ),
                     taskName) as Exec
-                t.setCommandLine(adb, "shell", "monkey", "-p", packageId, "-c", "android.intent.category.LAUNCHER", "1")
+                if ((project.extensions.getByName("appRunner") as AppRunnerExtension).tv) {
+                    t.setCommandLine(adb, "shell", "monkey", "-p", packageId, "-c", "android.intent.category.LEANBACK_LAUNCHER", "1")
+                } else {
+                    t.setCommandLine(adb, "shell", "monkey", "-p", packageId, "-c", "android.intent.category.LAUNCHER", "1")
+                }
             }
         }
     }
 }
+
