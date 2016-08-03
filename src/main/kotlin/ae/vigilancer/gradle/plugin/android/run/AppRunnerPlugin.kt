@@ -5,12 +5,13 @@ import com.android.build.gradle.AppPlugin
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.tasks.Exec
+import org.gradle.api.tasks.StopExecutionException
 
 class AppRunnerPlugin : Plugin<Project> {
 
     override fun apply(project: Project) {
         if (!project.plugins.hasPlugin(AppPlugin::class.java)) {
-            throw RuntimeException("should be declared after 'com.android.application'")
+            throw StopExecutionException("should be applied after 'com.android.application' plugin")
         }
         val ext: AppExtension = project.extensions.getByType(AppExtension::class.java)
 
