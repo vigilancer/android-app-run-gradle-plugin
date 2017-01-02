@@ -1,9 +1,10 @@
 buildscript {
     repositories {
+        mavenLocal()
         jcenter()
     }
     dependencies {
-        classpath "ae.vigilancer.gradle.plugin:android-run:1.0.2"
+        classpath "ae.vigilancer.gradle.plugin:android-run:1.1.0-SNAPSHOT"
     }
 }
 
