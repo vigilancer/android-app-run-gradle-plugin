@@ -27,9 +27,19 @@ buildscript {
 }
 
 dependencies {
-  repositories { mavenCentral() }
+  repositories { 
+    mavenCentral()
+    // for 'org.gradle:gradle-tooling-api'
+    //maven { url 'https://repo.gradle.org/gradle/libs-releases' }
+  }
 
   compile gradleApi()
+  // it's the same file; if you fancy enough to hack in,
+  // select it as source in IDE for classes from 'gradle-api-2.14.1.jar'
+  //provided "org.gradle:gradle-tooling-api:2.14.1"
+  //provided files('libs/gradle-api-2.14.1-sources.jar')
+
   compile "com.android.tools.build:gradle:1.5.0"
   compile "org.jetbrains.kotlin:kotlin-stdlib:1.0.6"
 }
+
