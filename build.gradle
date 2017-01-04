@@ -11,7 +11,7 @@ buildscript {
   ext {
     this_groupId = 'ae.vigilancer.gradle.plugin'
     this_artifactId = 'android-run'
-    this_version = '1.2.0-SNAPSHOT'
+    this_version = '1.2.0'
     this_url = 'https://github.com/vigilancer/android-app-run-gradle-plugin'
     this_vcsUrl = 'https://github.com/vigilancer/android-app-run-gradle-plugin.git'
     this_description = 'Build, install and run any BuildVariant of Android application with one command'
