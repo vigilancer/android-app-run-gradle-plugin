@@ -31,13 +31,14 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath "ae.vigilancer.gradle.plugin:android-run:1.0.2"
+        classpath "ae.vigilancer.gradle.plugin:android-run:1.2.0"
     }
 }
 
 appRunner {
-    // set `true`, if targeting android-tv (action MAIN == LEANBACK_LAUNCHER)
-    tv false // default
+    // default is "android.intent.category.LAUNCHER"
+    // if targeting android tv change:
+    intent_category = "android.intent.category.LEANBACK_LAUNCHER"
 }
 ----
 
@@ -58,3 +59,4 @@ runArmPaidappSomethingBlue - Install and run SomethingBlueArmPaidapp build.
 
 *In example above there are no tasks for Release variants since test project have no signingConfig for Release.
 
+Yes. It is working with multiple connected devices.
