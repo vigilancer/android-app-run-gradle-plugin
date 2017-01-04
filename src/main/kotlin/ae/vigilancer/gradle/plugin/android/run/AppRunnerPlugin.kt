@@ -15,8 +15,9 @@ import java.util.concurrent.TimeUnit
 
 class AppRunnerPlugin : Plugin<Project> {
 
-    val cmd_monkey_mobile = "monkey -p %s -c android.intent.category.LAUNCHER 1"
-    val cmd_monkey_tv = "monkey -p %s -c android.intent.category.LEANBACK_LAUNCHER 1"
+    companion object {
+        private val CMD = "monkey -p %s -c %s 1"
+    }
 
     override fun apply(project: Project) {
         if (!project.plugins.hasPlugin(AppPlugin::class.java)) {
@@ -37,7 +38,7 @@ class AppRunnerPlugin : Plugin<Project> {
             val packageId = variant.applicationId
             val parentTask = variant.install
 
-            val isTvApp = (project.extensions.getByName("appRunner") as AppRunnerExtension).tv
+            val intent_category = (project.extensions.getByName("appRunner") as AppRunnerExtension).intent_category
 
             val t: DefaultTask = project.task(
                     mapOf(
@@ -50,16 +51,15 @@ class AppRunnerPlugin : Plugin<Project> {
 
             deviceProvider.devices.forEach { device ->
                 t.doLast {
-                    device.executeShellCommand(commandLineToRunApp(packageId, isTvApp), NullOutputReceiver(),
+                    device.executeShellCommand(commandLineToRunApp(packageId, intent_category), NullOutputReceiver(),
                             10, TimeUnit.SECONDS)
                 }
             }
         }
     }
 
-    private fun commandLineToRunApp(packageId: String, tvApp: Boolean): String {
-        val cmd = if (tvApp) cmd_monkey_tv else cmd_monkey_mobile
-        return cmd.format(packageId)
+    private fun commandLineToRunApp(packageId: String, intent_category: String): String {
+        return CMD.format(packageId, intent_category)
     }
 
 }
