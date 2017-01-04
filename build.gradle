@@ -29,6 +29,7 @@ buildscript {
 dependencies {
   repositories { 
     mavenCentral()
+    jcenter()
     // for 'org.gradle:gradle-tooling-api'
     //maven { url 'https://repo.gradle.org/gradle/libs-releases' }
   }
@@ -39,7 +40,7 @@ dependencies {
   //provided "org.gradle:gradle-tooling-api:2.14.1"
   //provided files('libs/gradle-api-2.14.1-sources.jar')
 
-  compile "com.android.tools.build:gradle:1.5.0"
+  compile "com.android.tools.build:gradle:2.2.0"
   compile "org.jetbrains.kotlin:kotlin-stdlib:1.0.6"
 }
 

@@ -2,15 +2,21 @@ package ae.vigilancer.gradle.plugin.android.run
 
 import com.android.build.gradle.AppExtension
 import com.android.build.gradle.AppPlugin
+import com.android.builder.testing.ConnectedDeviceProvider
+import com.android.builder.testing.api.DeviceProvider
+import com.android.ddmlib.NullOutputReceiver
+import com.android.utils.StdLogger
+import org.gradle.api.DefaultTask
 import org.gradle.api.Plugin
 import org.gradle.api.Project
-import org.gradle.api.tasks.Exec
 import org.gradle.api.tasks.StopExecutionException
+import java.util.concurrent.TimeUnit
+
 
 class AppRunnerPlugin : Plugin<Project> {
 
-    val cmd_monkey_mobile = "shell monkey -p %s -c android.intent.category.LAUNCHER 1"
-    val cmd_monkey_tv = "shell monkey -p %s -c android.intent.category.LEANBACK_LAUNCHER 1"
+    val cmd_monkey_mobile = "monkey -p %s -c android.intent.category.LAUNCHER 1"
+    val cmd_monkey_tv = "monkey -p %s -c android.intent.category.LEANBACK_LAUNCHER 1"
 
     override fun apply(project: Project) {
         if (!project.plugins.hasPlugin(AppPlugin::class.java)) {
@@ -19,6 +25,8 @@ class AppRunnerPlugin : Plugin<Project> {
         project.extensions.create("appRunner", AppRunnerExtension::class.java)
         val ext: AppExtension = project.extensions.getByType(AppExtension::class.java)
         val adb = ext.adbExe
+        val deviceProvider: DeviceProvider = ConnectedDeviceProvider(adb, 2000, StdLogger(StdLogger.Level.VERBOSE));
+        deviceProvider.init()
 
         ext.applicationVariants.all { variant ->
             // skipping unsigned non-debug builds since they don't have 'Install*' tasks
@@ -31,23 +39,28 @@ class AppRunnerPlugin : Plugin<Project> {
 
             val isTvApp = (project.extensions.getByName("appRunner") as AppRunnerExtension).tv
 
-            val cmd: Exec = project.task(
-            mapOf(
-                "type" to Exec::class.java,
-                "dependsOn" to parentTask,
-                "description" to "Install and run ${variant.description}.",
-                "group" to "Running"
-            ),
-            taskName) as Exec
-            cmd.setExecutable(adb)
-            cmd.setArgs(adbArguments(packageId, isTvApp))
+            val t: DefaultTask = project.task(
+                    mapOf(
+                            "type" to DefaultTask::class.java,
+                            "dependsOn" to parentTask,
+                            "description" to "Install and run ${variant.description}.",
+                            "group" to "Running"
+                    ),
+                    taskName) as DefaultTask
+
+            deviceProvider.devices.forEach { device ->
+                t.doLast {
+                    device.executeShellCommand(commandLineToRunApp(packageId, isTvApp), NullOutputReceiver(),
+                            10, TimeUnit.SECONDS)
+                }
+            }
         }
     }
 
-    private fun adbArguments(packageId: String, isTvApp: Boolean): Iterable<Any> {
-        val cmd = if (isTvApp) cmd_monkey_tv else cmd_monkey_mobile
-
-        return cmd.format(packageId).split(" ")
+    private fun commandLineToRunApp(packageId: String, tvApp: Boolean): String {
+        val cmd = if (tvApp) cmd_monkey_tv else cmd_monkey_mobile
+        return cmd.format(packageId)
     }
+
 }
 
