@@ -26,10 +26,11 @@ class AppRunnerPlugin : Plugin<Project> {
         project.extensions.create("appRunner", AppRunnerExtension::class.java)
         val ext: AppExtension = project.extensions.getByType(AppExtension::class.java)
         val adb = ext.adbExe
-        val deviceProvider: DeviceProvider = ConnectedDeviceProvider(adb, 2000, StdLogger(StdLogger.Level.VERBOSE));
-        deviceProvider.init()
 
         ext.applicationVariants.all { variant ->
+            val deviceProvider: DeviceProvider = ConnectedDeviceProvider(adb, 2000, StdLogger(StdLogger.Level.VERBOSE));
+            deviceProvider.init()
+
             // skipping unsigned non-debug builds since they don't have 'Install*' tasks
             if (!variant.isSigningReady)
                 return@all
