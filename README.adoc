@@ -31,7 +31,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath "ae.vigilancer.gradle.plugin:android-run:1.2.0"
+        classpath "ae.vigilancer.gradle.plugin:android-run:1.2.1"
     }
 }
 
