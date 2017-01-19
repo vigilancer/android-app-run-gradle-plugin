@@ -1,11 +1,11 @@
 buildscript {
-    repositories {
-        mavenLocal()
-        jcenter()
-    }
-    dependencies {
-        classpath "ae.vigilancer.gradle.plugin:android-run:1.2.2-SNAPSHOT"
-    }
+  repositories {
+    mavenLocal()
+    jcenter()
+  }
+  dependencies {
+    classpath "ae.vigilancer.gradle.plugin:android-run:1.2.2-SNAPSHOT"
+  }
 }
 
 apply plugin: 'com.android.application'
@@ -13,21 +13,21 @@ apply plugin: 'android-run-app'
 
 
 android {
-    compileSdkVersion 24
-    buildToolsVersion "24.0.3"
+  compileSdkVersion 24
+  buildToolsVersion "24.0.3"
 
-    defaultConfig {
-        applicationId  "ae.sample"
-        minSdkVersion 16
-        targetSdkVersion 24
-        versionCode 1
-        versionName "1.0"
+  defaultConfig {
+    applicationId "ae.sample"
+    minSdkVersion 16
+    targetSdkVersion 24
+    versionCode 1
+    versionName "1.0"
+  }
+  buildTypes {
+    release {
+      minifyEnabled false
     }
-    buildTypes {
-        release {
-            minifyEnabled false
-        }
-    }
+  }
 }
 
 dependencies {

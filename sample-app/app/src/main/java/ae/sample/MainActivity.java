@@ -4,15 +4,15 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.widget.TextView;
 
-public class MainActivity extends Activity
-{
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+public class MainActivity extends Activity {
 
-        TextView label = new TextView(this);
-        label.setText("Hello world!");
+  @Override
+  public void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
 
-        setContentView(label);
-    }
+    TextView label = new TextView(this);
+    label.setText("Hello world!");
+
+    setContentView(label);
+  }
 }

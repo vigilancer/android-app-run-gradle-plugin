@@ -6,6 +6,6 @@ package ae.vigilancer.gradle.plugin.android.run
  * for CATEGORY_name constants
  */
 open class AppRunnerExtension {
-    var intent_category: String = "android.intent.category.LAUNCHER"
+  var intent_category: String = "android.intent.category.LAUNCHER"
 }
 
