@@ -28,9 +28,6 @@ class AppRunnerPlugin : Plugin<Project> {
         val adb = ext.adbExe
 
         ext.applicationVariants.all { variant ->
-            val deviceProvider: DeviceProvider = ConnectedDeviceProvider(adb, 2000, StdLogger(StdLogger.Level.VERBOSE));
-            deviceProvider.init()
-
             // skipping unsigned non-debug builds since they don't have 'Install*' tasks
             if (!variant.isSigningReady)
                 return@all
@@ -50,9 +47,12 @@ class AppRunnerPlugin : Plugin<Project> {
                     ),
                     taskName) as DefaultTask
 
-            deviceProvider.devices.forEach { device ->
                 t.doLast {
-                    device.executeShellCommand(commandLineToRunApp(packageId, intent_category), NullOutputReceiver(),
+                    val deviceProvider: DeviceProvider = ConnectedDeviceProvider(adb, 2000, StdLogger(StdLogger.Level.VERBOSE))
+                    deviceProvider.init()
+
+                    deviceProvider.devices.forEach { device ->
+                        device.executeShellCommand(commandLineToRunApp(packageId, intent_category), NullOutputReceiver(),
                             10, TimeUnit.SECONDS)
                 }
             }
@@ -64,4 +64,3 @@ class AppRunnerPlugin : Plugin<Project> {
     }
 
 }
-
